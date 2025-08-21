@@ -1,6 +1,6 @@
 name: "Yate Server"
 description: "Yet Another Telephony Exchange"
-version: "0.2.1"
+version: "0.2.2"
 slug: "yate"
 startup: services
 arch:
@@ -9,7 +9,7 @@ host_network: true
 init: false
 stage: experimental
 map:
-  - addon_config
+  - addon_config:rw
 image: ghcr.io/mtrnord/yate
 services:
   - mysql:want
