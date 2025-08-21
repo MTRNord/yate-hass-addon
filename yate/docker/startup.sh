@@ -1,4 +1,7 @@
 #!/usr/bin/env bashio
+# shellcheck shell=bash
+set -e
+
 rm -r /yate/conf.d
 ln -s /config /yate/conf.d
 
