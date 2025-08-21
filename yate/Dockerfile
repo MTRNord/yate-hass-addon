@@ -6,26 +6,26 @@ LABEL \
   io.hass.type="addon" \
   io.hass.arch="armhf|aarch64|i386|amd64"
 
-RUN export DEBIAN_FRONTEND=noninteractive
-apt-get update
-apt-get install -y --no-install-recommends --no-install-suggests \
-  git \
-  autoconf \
-  make \
-  gcc \
-  g++ \
-  libspeex1 \
-  libspeexdsp1 \
-  libgsm1 \
-  libgsm1-dev \
-  libspeex-dev \
-  libspeexdsp-dev \
-  libssl-dev \
-  libssl3 \
-  zlib1g \
-  zlib1g-dev \
-  default-libmysqlclient-dev
-
+RUN export DEBIAN_FRONTEND=noninteractive; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends --no-install-suggests \
+        git \
+        autoconf \
+        make \
+        gcc \
+        g++ \
+        libspeex1 \
+        libspeexdsp1 \
+        libgsm1 \
+        libgsm1-dev \
+        libspeex-dev \
+        libspeexdsp-dev \
+        libssl-dev \
+        libssl3 \
+        zlib1g \
+        zlib1g-dev \
+        default-libmysqlclient-dev
+        
 WORKDIR /
 RUN git clone https://github.com/yatevoip/yate.git
 WORKDIR /yate
@@ -34,5 +34,4 @@ RUN ./configure
 RUN make
 
 WORKDIR /
-COPY docker/startup.sh /usr/local/bin/startup.sh
-COPY docker/s6-overlay/s6-rc.d/yate /etc/s6-overlay/s6-rc.d/yate
+COPY docker/s6-overlay /etc/s6-overlay
