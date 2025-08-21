@@ -1,6 +1,6 @@
 name: "Yate Server"
 description: "Yet Another Telephony Exchange"
-version: "0.2.2"
+version: "0.2.3"
 slug: "yate"
 startup: services
 arch:
@@ -17,3 +17,4 @@ schema:
   mysql_db: str
   mysql_user: str
   mysql_password: password
+homeassistant_api: true
