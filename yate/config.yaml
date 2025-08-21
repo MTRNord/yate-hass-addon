@@ -1,6 +1,6 @@
 name: "Yate Server"
 description: "Yet Another Telephony Exchange"
-version: "0.1.1"
+version: "0.1.2"
 slug: "yate"
 startup: services
 arch:
