@@ -28,7 +28,8 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
         zlib1g-dev \
         default-libmysqlclient-dev \
         curl \
-        vlc
+        vlc \
+        mpg123
         
 WORKDIR /
 RUN git clone https://github.com/yatevoip/yate.git
