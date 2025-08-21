@@ -8,6 +8,8 @@ ln -s /config /yate/conf.d
 # Replace MySQL configuration values
 # if /config/mysqldb.conf exists.
 if [ -f /config/mysqldb.conf ]; then
+    echo "Token: ${SUPERVISOR_TOKEN}"
+
     if ! bashio::services.available mysql; then
         bashio::log.fatal \
             "Local database access should be provided by the MariaDB addon"

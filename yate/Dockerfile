@@ -2,9 +2,11 @@ FROM ghcr.io/hassio-addons/debian-base:7.8.3
 SHELL [ "/bin/bash", "-euxo", "pipefail", "-c" ]
 
 LABEL \
-  io.hass.version="VERSION" \
+  io.hass.name="Yate Server" \
+  io.hass.description="Yet Another Telephony Exchange" \
+  io.hass.version="0.2.9" \
   io.hass.type="addon" \
-  io.hass.arch="armhf|aarch64|i386|amd64"
+  io.hass.arch="amd64"
 
 RUN export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
