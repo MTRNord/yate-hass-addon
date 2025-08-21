@@ -23,5 +23,17 @@ if [ -f /config/mysqldb.conf ]; then
     sed -i "s/^database=.*/database=$(bashio::config "mysql_db")/g" /config/mysqldb.conf
 fi
 
+# If the download_sounds option is set, download the sounds.
+if bashio::config.true "download_sounds"; then
+    if ! bashio::fs.directory_exists "/yate/sounds"; then
+        mkdir -p /yate/sounds
+    fi
+    bashio::log.info "Downloading sound files"
+    # TODO: Find more sound files to download.
+    curl -L -o /yate/sounds/hold.mp3 \
+        "https://raw.githubusercontent.com/mtrnord/yate-hass-addon/main/sounds/hold.mp3"
+    bashio::log.info "Downloaded hold sound file"
+fi
+
 cd /yate
 exec /yate/run

@@ -1,6 +1,6 @@
 name: "Yate Server"
 description: "Yet Another Telephony Exchange"
-version: "0.2.9"
+version: "0.2.10"
 slug: "yate"
 startup: application
 hassio_api: true
@@ -18,3 +18,9 @@ schema:
   mysql_db: str?
   mysql_user: str?
   mysql_password: password?
+  download_sounds: bool
+options:
+  mysql_db: "yate"
+  mysql_user: "yate"
+  mysql_password: ""
+  download_sounds: true
