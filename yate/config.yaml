@@ -11,3 +11,9 @@ stage: experimental
 map:
   - addon_config
 image: ghcr.io/mtrnord/yate
+services:
+  mysql: want
+schema:
+  mysql_db: str
+  mysql_user: str
+  mysql_password: password
