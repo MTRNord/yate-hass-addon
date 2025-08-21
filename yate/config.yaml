@@ -17,4 +17,5 @@ schema:
   mysql_db: str
   mysql_user: str
   mysql_password: password
-homeassistant_api: true
+hassio_role: default
+hassio_api: true
