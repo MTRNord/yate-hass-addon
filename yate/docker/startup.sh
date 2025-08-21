@@ -5,6 +5,12 @@ ln -s /config /yate/conf.d
 # Replace MySQL configuration values
 # if /config/mysqldb.conf exists.
 if [ -f /config/mysqldb.conf ]; then
+    if ! bashio::services.available mysql; then
+        bashio::log.fatal \
+            "Local database access should be provided by the MariaDB addon"
+        bashio::exit.nok \
+            "Please ensure it is installed and started"
+    fi
     sed -i "s/^host=.*/host=$(bashio::services mysql "host")/g" /config/mysqldb.conf
     sed -i "s/^port=.*/port=$(bashio::services mysql "port")/g" /config/mysqldb.conf
     sed -i "s/^user=.*/user=$(bashio::config "mysql_user")/g" /config/mysqldb.conf

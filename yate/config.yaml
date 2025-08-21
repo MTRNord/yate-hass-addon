@@ -1,21 +1,20 @@
 name: "Yate Server"
 description: "Yet Another Telephony Exchange"
-version: "0.2.4"
+version: "0.2.5"
 slug: "yate"
-startup: services
+startup: application
+hassio_api: true
 arch:
   - amd64
 host_network: true
 init: false
 stage: experimental
 map:
-  - addon_config:rw
+  - "addon_config:rw"
 image: ghcr.io/mtrnord/yate
 services:
-  - mysql:want
+  - "mysql:want"
 schema:
   mysql_db: str
   mysql_user: str
   mysql_password: password
-hassio_role: default
-hassio_api: true
