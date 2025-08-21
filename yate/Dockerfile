@@ -36,6 +36,3 @@ RUN make
 WORKDIR /
 COPY docker/startup.sh /usr/local/bin/startup.sh
 COPY docker/s6-overlay/s6-rc.d/yate /etc/s6-overlay/s6-rc.d/yate
-
-CMD ["/usr/local/bin/startup.sh"]
-HEALTHCHECK CMD [ "supervisorctl", "status" ]
