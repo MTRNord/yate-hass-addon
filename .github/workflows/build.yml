@@ -6,11 +6,13 @@ on:
       - main
     paths:
       - "yate/**"
+      - ".github/**"
   pull_request:
     branches:
       - main
     paths:
       - "yate/**"
+      - ".github/**"
   workflow_dispatch:
   release:
     types: [published]
