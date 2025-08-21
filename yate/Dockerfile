@@ -24,7 +24,8 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
         libssl3 \
         zlib1g \
         zlib1g-dev \
-        default-libmysqlclient-dev 
+        default-libmysqlclient-dev \
+        supervisor
         
 WORKDIR /
 RUN git clone https://github.com/yatevoip/yate.git
