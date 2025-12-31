@@ -1,4 +1,4 @@
-FROM ghcr.io/hassio-addons/debian-base:0.1.0
+FROM ghcr.io/hassio-addons/debian-base:9.1.0
 SHELL [ "/bin/bash", "-euxo", "pipefail", "-c" ]
 
 LABEL \
