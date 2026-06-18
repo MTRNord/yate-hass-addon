@@ -56,16 +56,16 @@ if bashio::config.true "spam_check"; then
     fi
 
     # Ensure extmodule.conf exists and includes our spam checker script.
-    # We add a [scripts] entry only if one isn't already present so user
-    # customisations in extmodule.conf are preserved.
-    if ! grep -q "spam_checker" /config/extmodule.conf 2>/dev/null; then
+    # extmodule [scripts] format: /path/to/script=optional_args
+    # We add the entry only if not already present so user customisations are preserved.
+    if ! grep -q "spam_checker.py" /config/extmodule.conf 2>/dev/null; then
         if grep -q "\[scripts\]" /config/extmodule.conf 2>/dev/null; then
             # [scripts] section already exists — append our entry after it
-            sed -i '/^\[scripts\]/a spam_checker=/opt/spam/spam_checker.py' \
+            sed -i '/^\[scripts\]/a /opt/spam/spam_checker.py=' \
                 /config/extmodule.conf
         else
             # No [scripts] section — append one
-            printf '\n[scripts]\nspam_checker=/opt/spam/spam_checker.py\n' \
+            printf '\n[scripts]\n/opt/spam/spam_checker.py=\n' \
                 >> /config/extmodule.conf
         fi
         bashio::log.info "Registered spam_checker in extmodule.conf"
@@ -76,8 +76,8 @@ else
     bashio::log.info "Spam check disabled — cleaning up"
 
     # Remove spam_checker line from extmodule.conf if present
-    if grep -q "spam_checker" /config/extmodule.conf 2>/dev/null; then
-        sed -i '/spam_checker/d' /config/extmodule.conf
+    if grep -q "spam_checker.py" /config/extmodule.conf 2>/dev/null; then
+        sed -i '/spam_checker\.py/d' /config/extmodule.conf
         bashio::log.info "Removed spam_checker from extmodule.conf"
     fi
 

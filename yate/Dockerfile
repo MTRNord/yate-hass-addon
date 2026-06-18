@@ -42,6 +42,7 @@ RUN make
 
 WORKDIR /
 COPY docker/spam /opt/spam
-RUN pip3 install --break-system-packages -r /opt/spam/requirements.txt
+RUN pip3 install --break-system-packages -r /opt/spam/requirements.txt && \
+    chmod +x /opt/spam/spam_checker.py /opt/spam/update_bnetza.py
 
 COPY docker/s6-overlay /etc/s6-overlay
