@@ -1,10 +1,10 @@
-FROM ghcr.io/hassio-addons/debian-base:9.1.0
+FROM ghcr.io/hassio-addons/debian-base:9.3.0
 SHELL [ "/bin/bash", "-euxo", "pipefail", "-c" ]
 
 LABEL \
     io.hass.name="Yate Server" \
     io.hass.description="Yet Another Telephony Exchange" \
-    io.hass.version="0.3.0" \
+    io.hass.version="0.4.0" \
     io.hass.type="addon" \
     io.hass.arch="amd64"
 
