@@ -19,8 +19,10 @@ schema:
   mysql_user: str?
   mysql_password: password?
   download_sounds: bool
+  spam_check: bool
 options:
   mysql_db: "yate"
   mysql_user: "yate"
   mysql_password: ""
   download_sounds: true
+  spam_check: true

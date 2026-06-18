@@ -29,7 +29,9 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     default-libmysqlclient-dev \
     curl \
     vlc \
-    mpg123
+    mpg123 \
+    python3 \
+    python3-pip
 
 WORKDIR /
 RUN git clone https://github.com/yatevoip/yate.git
@@ -39,4 +41,7 @@ RUN ./configure
 RUN make
 
 WORKDIR /
+COPY docker/spam /opt/spam
+RUN pip3 install --break-system-packages -r /opt/spam/requirements.txt
+
 COPY docker/s6-overlay /etc/s6-overlay

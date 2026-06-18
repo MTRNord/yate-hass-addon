@@ -35,5 +35,65 @@ if bashio::config.true "download_sounds"; then
     bashio::log.info "Downloaded hold sound file"
 fi
 
+# Spam checking setup
+if bashio::config.true "spam_check"; then
+    bashio::log.info "Spam check enabled — setting up"
+
+    # Refresh BNetzA blocklist (runs in background so Yate isn't delayed)
+    mkdir -p /data/spam
+    bashio::log.info "Downloading BNetzA Maßnahmenliste in background..."
+    python3 /opt/spam/update_bnetza.py > /tmp/bnetza_update.log 2>&1 &
+
+    # Ensure extmodule.yate is enabled in yate.conf [modules].
+    # If the file has an explicit [modules] section and extmodule isn't listed,
+    # add it. If no [modules] section exists, Yate loads all modules by default
+    # and no change is needed.
+    if grep -q "^\[modules\]" /config/yate.conf 2>/dev/null; then
+        if ! grep -q "extmodule.yate" /config/yate.conf; then
+            sed -i '/^\[modules\]/a extmodule.yate=true' /config/yate.conf
+            bashio::log.info "Added extmodule.yate=true to yate.conf [modules]"
+        fi
+    fi
+
+    # Ensure extmodule.conf exists and includes our spam checker script.
+    # We add a [scripts] entry only if one isn't already present so user
+    # customisations in extmodule.conf are preserved.
+    if ! grep -q "spam_checker" /config/extmodule.conf 2>/dev/null; then
+        if grep -q "\[scripts\]" /config/extmodule.conf 2>/dev/null; then
+            # [scripts] section already exists — append our entry after it
+            sed -i '/^\[scripts\]/a spam_checker=/opt/spam/spam_checker.py' \
+                /config/extmodule.conf
+        else
+            # No [scripts] section — append one
+            printf '\n[scripts]\nspam_checker=/opt/spam/spam_checker.py\n' \
+                >> /config/extmodule.conf
+        fi
+        bashio::log.info "Registered spam_checker in extmodule.conf"
+    else
+        bashio::log.info "spam_checker already registered in extmodule.conf"
+    fi
+else
+    bashio::log.info "Spam check disabled — cleaning up"
+
+    # Remove spam_checker line from extmodule.conf if present
+    if grep -q "spam_checker" /config/extmodule.conf 2>/dev/null; then
+        sed -i '/spam_checker/d' /config/extmodule.conf
+        bashio::log.info "Removed spam_checker from extmodule.conf"
+    fi
+
+    # Remove extmodule.yate from yate.conf [modules] only if we are the sole
+    # reason it was added (i.e. extmodule.conf has no remaining [scripts] entries).
+    # This avoids breaking users who added their own external scripts.
+    if grep -q "^extmodule.yate=true" /config/yate.conf 2>/dev/null; then
+        remaining=$(grep -c "^[^;].*=.*" /config/extmodule.conf 2>/dev/null || echo 0)
+        if [ "${remaining}" -eq 0 ]; then
+            sed -i '/^extmodule\.yate=true/d' /config/yate.conf
+            bashio::log.info "Removed extmodule.yate=true from yate.conf [modules]"
+        else
+            bashio::log.info "extmodule.conf still has entries — leaving extmodule.yate in yate.conf"
+        fi
+    fi
+fi
+
 cd /yate
 exec /yate/run
