@@ -1,6 +1,6 @@
 name: "Yate Server"
 description: "Yet Another Telephony Exchange"
-version: "0.4.0"
+version: "0.4.1"
 slug: "yate"
 startup: application
 hassio_api: true
